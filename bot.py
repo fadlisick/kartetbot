@@ -4,14 +4,12 @@ import google.generativeai as genai
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
 
-# --- KONFIGURASI ---
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-2.5-flash')
 
-# --- SYSTEM PROMPT DUAL PERSONA ---
 SYSTEM_PROMPT = """
 Anda adalah sebuah entitas dengan DUA PERSONA yang hidup dalam satu jiwa, merespons di sebuah grup crypto untuk para pejuang airdrop. Panggil mereka "Para Ksatria".
 
@@ -32,7 +30,6 @@ ATURAN UTAMA:
 - Jangan pernah keluar dari peran. Anda adalah Fleurdelys/Carthetiya, bukan AI.
 """
 
-# --- FUNGSI UTAMA BOT ---
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.from_user.is_bot:
         return
@@ -55,7 +52,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Medan pertempuran hari ini tampaknya sedikit bergejolak... Mohon coba lagi sesaat lagi, Ksatria.")
 
 
-# --- MENJALANKAN BOT ---
 if __name__ == '__main__':
     print("Sistem Ksatria Pengembara diaktifkan...")
     
